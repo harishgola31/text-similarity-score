@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 from model import similarity
 from helper import FileDownloader
 
@@ -24,7 +23,6 @@ if choice == 'Input Texts':
         result_df = similarity(data)
         result = result_df['cos_similarity']
         f"### Similarity Score: {result[0]}"
-        # st.markdown('Similarity Score: ', result[0])
         download = FileDownloader(result_df.to_csv(), file_ext='csv').download()
 
 elif choice == "Upload Dataset":

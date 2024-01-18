@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 import base64 
 import time
@@ -25,26 +24,27 @@ def cleaning(text):   # defining a function stemming
 
 
 def average_word_vectors(words, model, vocabulary, num_features):
+    '''Calculating normalised vectort for words'''
+
+    feature_vector = np.zeros((num_features,),dtype="float64") # created a zero vector for input feature dimensions
+    nwords = 0.  # taking 0 at first as number of words
     
-    feature_vector = np.zeros((num_features,),dtype="float64")
-    nwords = 0.
-    
-    for word in words:
-        if word in vocabulary: 
-            nwords = nwords + 1.
-            feature_vector = np.add(feature_vector, model.wv[word])
+    for word in words:  # create a loop to calculate a vector for each word
+        if word in vocabulary: # if the word is present in given vocabulary
+            nwords = nwords + 1.  # adding the 1 to number of word if word exists
+            feature_vector = np.add(feature_vector, model.wv[word])  # adding the current vector with the vector in model
     
     if nwords:
-        feature_vector = np.divide(feature_vector, nwords)
+        feature_vector = np.divide(feature_vector, nwords)  # normalising the vectors
         
     return feature_vector
 
 
 def averaged_word_vectorizer(corpus, model, num_features):
-    vocabulary = set(model.wv.index_to_key)
+    vocabulary = set(model.wv.index_to_key)  # creating a vocabulary from the words present in model
     features = [average_word_vectors(tokenized_sentence, model, vocabulary, num_features)
                     for tokenized_sentence in corpus]
-    return np.array(features)
+    return np.array(features) # returning an array of vectors for every words
 
 
 def cosine_similarity(A, B):

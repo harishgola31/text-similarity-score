@@ -1,7 +1,4 @@
-import pandas as pd
-import numpy as np
 import nltk
-from gensim.models.fasttext import FastText
 import pickle
 from helper import cleaning, averaged_word_vectorizer, cosine_similarity
 
@@ -16,7 +13,7 @@ def similarity(data):
     data['cleaned_text1'] = data.cleaned_text1.apply(lambda x: nltk.word_tokenize(x))
     data['cleaned_text2'] = data.cleaned_text2.apply(lambda x: nltk.word_tokenize(x))
 
-    # Set values for various parameters
+    # Loading pre trained model for word embedding
     with open('word_embedded.pkl', 'rb') as file:
         model = pickle.load(file) 
     feature_size = model.vector_size
