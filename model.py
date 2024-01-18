@@ -6,6 +6,7 @@ from helper import cleaning, averaged_word_vectorizer, cosine_similarity
 def similarity(data):
 
     nltk.download('stopwords')
+    nltk.download('punkt')
     nltk.download('wordnet')
     
     data['cleaned_text1'] = data.text1.apply(lambda x: cleaning(x))
